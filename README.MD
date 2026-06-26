@@ -1,5 +1,18 @@
 # RabbitMQ — Learning Notes
 
+## Lessons
+
+Hands-on lessons with code, exercises, and reveal answers. Work through them in order.
+
+| # | Lesson | What you learn |
+|---|--------|----------------|
+| 01 | [Setup & Exploring the Management UI](lessons/01-setup.md) | Run RabbitMQ with Docker, explore the UI, manually publish and consume messages before writing any code |
+| 02 | [Hello World](lessons/02-hello-world.md) | First Spring Boot producer and consumer, acks, nacks, requeue, and what happens when your consumer throws |
+
+> See [learn.md](learn.md) for the full learning roadmap and strategy.
+
+---
+
 ## What is a Message Queue?
 
 A **message queue** is a component for inter-process communication that passes control or data (messages) between separate processes or services. Think of it like a post box: the sender drops a letter in, and the receiver picks it up later — neither has to be present at the same time.
