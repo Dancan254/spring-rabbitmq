@@ -1,1 +1,15 @@
-spring.application.name=spring-rabbitmq
+spring:
+  application:
+    name: spring-boot-rabbitmq
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+logging:
+  level:
+    org: error
+    org.springframework.amqp: debug
+debug: true
+server:
+  port: 8081
