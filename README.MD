@@ -8,6 +8,7 @@ Hands-on lessons with code, exercises, and reveal answers. Work through them in 
 |---|--------|----------------|
 | 01 | [Setup & Exploring the Management UI](lessons/01-setup.md) | Run RabbitMQ with Docker, explore the UI, manually publish and consume messages before writing any code |
 | 02 | [Hello World](lessons/02-hello-world.md) | First Spring Boot producer and consumer, acks, nacks, requeue, and what happens when your consumer throws |
+| 03 | [Work Queues](lessons/03-work-queues.md) | Competing consumers, prefetch count, fair dispatch vs round-robin, and manual acknowledgement |
 
 > See [learn.md](learn.md) for the full learning roadmap and strategy.
 
