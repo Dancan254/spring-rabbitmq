@@ -17,6 +17,6 @@ public class EventPublisher {
 
     public void publish(String event) {
         println("[Publisher] Broadcasting: " + event);
-        rabbitTemplate.convertAndSend(FANOUT_EXCHANGE, event);
+        rabbitTemplate.convertAndSend(FANOUT_EXCHANGE, "", event);
     }
 }
