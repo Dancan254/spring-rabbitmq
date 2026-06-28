@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
+    //Hello
     public static final String QUEUE_NAME = "hello.queue";
     public static final String EXCHANGE_NAME = "hello.exchange";
     public static final String ROUTING_KEY = "hello.routing.key";
@@ -21,6 +22,15 @@ public class RabbitMQConfig {
     public static final String EMAIL_QUEUE = "email.queue";
     public static final String ANALYTICS_QUEUE = "analytics.queue";
     public static final String AUDIT_QUEUE = "audit.queue";
+
+    //Routing
+    public static final String LOGS_EXCHANGE  = "logs.exchange";
+    public static final String LOG_QUEUE      = "logs.all.queue";
+    public static final String ALERT_QUEUE    = "logs.alert.queue";
+
+    public static final String KEY_ERROR   = "error";
+    public static final String KEY_WARNING = "warning";
+    public static final String KEY_INFO    = "info";
 
     //Hello queue config
     @Bean
@@ -103,5 +113,52 @@ public class RabbitMQConfig {
         return BindingBuilder
                 .bind(analyticsQueue())
                 .to(fanoutExchange());
+    }
+
+    //Routing
+    @Bean
+    public DirectExchange logsExchange(){
+        return new DirectExchange(LOGS_EXCHANGE);
+    }
+    @Bean
+    public Queue logQueue(){
+        return new Queue(LOG_QUEUE, true);
+    }
+    @Bean
+    public Queue alertQueue(){
+        return new Queue(ALERT_QUEUE, true);
+    }
+    //logs.all.queue
+    @Bean
+    public Binding logBindingError(){
+        return BindingBuilder
+                .bind(logQueue())
+                .to(logsExchange())
+                .with(KEY_ERROR);
+    }
+
+    @Bean
+    public Binding logBindingWarning(){
+        return BindingBuilder
+                .bind(logQueue())
+                .to(logsExchange())
+                .with(KEY_WARNING);
+    }
+
+    @Bean
+    public Binding logBindingInfo(){
+        return BindingBuilder
+                .bind(logQueue())
+                .to(logsExchange())
+                .with(KEY_INFO);
+    }
+
+    //logs.aletrt
+    @Bean
+    public Binding alertBindingError(){
+        return BindingBuilder
+                .bind(alertQueue())
+                .to(logsExchange())
+                .with(KEY_ERROR);
     }
 }
