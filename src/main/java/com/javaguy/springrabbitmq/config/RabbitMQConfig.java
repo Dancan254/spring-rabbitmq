@@ -11,10 +11,18 @@ public class RabbitMQConfig {
     public static final String QUEUE_NAME = "hello.queue";
     public static final String EXCHANGE_NAME = "hello.exchange";
     public static final String ROUTING_KEY = "hello.routing.key";
+    //workers
     public static final String WORK_QUEUE = "work.queue";
     public static final String WORK_EXCHANGE = "work.exchange";
     public static final String WORK_ROUTING_KEY = "work.routing.key";
 
+    //fan-out exchange
+    public static final String FANOUT_EXCHANGE = "fanout.exchange";
+    public static final String EMAIL_QUEUE = "email.queue";
+    public static final String ANALYTICS_QUEUE = "analytics.queue";
+    public static final String AUDIT_QUEUE = "audit.queue";
+
+    //Hello queue config
     @Bean
     public Queue queue(){
         return new Queue(QUEUE_NAME, true); // creates a durable queue
@@ -51,7 +59,7 @@ public class RabbitMQConfig {
                 .with(WORK_ROUTING_KEY);
     }
 
-    @Bean
+    @Bean(name = "workerContainerFactory")
     public SimpleRabbitListenerContainerFactory workerContainerFactory(ConnectionFactory connectionFactory){
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
@@ -60,5 +68,40 @@ public class RabbitMQConfig {
         return factory;
     }
 
+    //fanout confi
+    @Bean
+    public FanoutExchange fanoutExchange(){
+        return new FanoutExchange(FANOUT_EXCHANGE);
+    }
 
+    @Bean
+    public Queue emailQueue(){
+        return new Queue(EMAIL_QUEUE, true);
+    }
+    @Bean
+    public Queue analyticsQueue(){
+        return new Queue(ANALYTICS_QUEUE, true);
+    }
+    @Bean
+    public Queue auditQueue(){
+        return new Queue(AUDIT_QUEUE, true);
+    }
+    @Bean
+    public Binding emailBinding(){
+        return BindingBuilder
+                .bind(emailQueue())
+                .to(fanoutExchange());
+    }
+    @Bean
+    public Binding auditBinding(){
+        return BindingBuilder
+                .bind(auditQueue())
+                .to(fanoutExchange());
+    }
+    @Bean
+    public Binding analyticsBinding(){
+        return BindingBuilder
+                .bind(analyticsQueue())
+                .to(fanoutExchange());
+    }
 }
