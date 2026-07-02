@@ -32,6 +32,12 @@ public class RabbitMQConfig {
     public static final String KEY_WARNING = "warning";
     public static final String KEY_INFO    = "info";
 
+    //Topic Exchange
+    public static final String TOPIC_EXCHANGE   = "app.logs.exchange";
+    public static final String CRITICAL_QUEUE   = "logs.critical.queue";
+    public static final String PAYMENT_QUEUE    = "logs.payment.queue";
+    public static final String ALL_LOGS_QUEUE   = "logs.all.queue";
+
     //Hello queue config
     @Bean
     public Queue queue(){
@@ -161,4 +167,51 @@ public class RabbitMQConfig {
                 .to(logsExchange())
                 .with(KEY_ERROR);
     }
+
+    //Topic Exchange
+    @Bean
+    public TopicExchange topicExchange(){
+        return new TopicExchange(TOPIC_EXCHANGE);
+    }
+
+    @Bean
+    public Queue criticalQueue(){
+        return new Queue(CRITICAL_QUEUE, true);
+    }
+
+    @Bean
+    public Queue paymentQueue(){
+        return new Queue(PAYMENT_QUEUE, true);
+    }
+
+    @Bean
+    public Queue allLogsQueue(){
+        return new Queue(ALL_LOGS_QUEUE, true);
+    }
+
+    //all errors, any service: *.error or #.error
+
+    @Bean
+    public Binding criticalBinding(){
+        return BindingBuilder
+                .bind(criticalQueue())
+                .to(topicExchange())
+                .with("#.critical");
+    }
+
+    //All payment logs, any level
+    @Bean
+    public Binding paymentBinding(){
+        return BindingBuilder
+                .bind(paymentQueue())
+                .to(topicExchange())
+                .with("payment.#");
+    }
+    // Everything: #
+@Bean
+public Binding allLogsBinding() {
+    return BindingBuilder
+                .bind(allLogsQueue())
+                .to(topicExchange()).with("#");
+}
 }
