@@ -11,6 +11,7 @@ Hands-on lessons with code, exercises, and reveal answers. Work through them in 
 | 03 | [Work Queues](lessons/03-work-queues.md) | Competing consumers, prefetch count, fair dispatch vs round-robin, and manual acknowledgement |
 | 04 | [Pub/Sub — Fanout Exchange](lessons/04-fanout.md) | Broadcast one event to multiple independent subscribers, each on their own queue |
 | 05 | [Routing — Direct Exchange](lessons/05-routing.md) | Selectively route messages by routing key — multiple bindings per queue, multiple queues per key |
+| 06 | [Topics — Topic Exchange](lessons/06-topics.md) | Wildcard routing patterns with `*` and `#` — one binding covers an entire family of routing keys |
 
 > See [learn.md](learn.md) for the full learning roadmap and strategy.
 
