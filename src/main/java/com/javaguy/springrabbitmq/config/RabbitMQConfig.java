@@ -38,6 +38,10 @@ public class RabbitMQConfig {
     public static final String PAYMENT_QUEUE    = "logs.payment.queue";
     public static final String ALL_LOGS_QUEUE   = "logs.all.queue";
 
+    //Publisher Confirms
+    public static final String RELIABLE_EXCHANGE = "reliable.exchange";
+    public static final String RELIABLE_QUEUE    = "reliable.orders.queue";
+
     //Hello queue config
     @Bean
     public Queue queue(){
@@ -214,4 +218,23 @@ public Binding allLogsBinding() {
                 .bind(allLogsQueue())
                 .to(topicExchange()).with("#");
 }
+
+    //Publisher Confirms
+    @Bean
+    public DirectExchange reliableExchange(){
+        return new DirectExchange(RELIABLE_EXCHANGE);
+    }
+
+    @Bean
+    public Queue reliableQueue(){
+        return new Queue(RELIABLE_QUEUE, true);
+    }
+
+    @Bean
+    public Binding reliableBinding(){
+        return BindingBuilder
+                .bind(reliableQueue())
+                .to(reliableExchange())
+                .with("order.created");
+    }
 }

@@ -1,4 +1,4 @@
-package com.javaguy.springrabbitmq.producer;
+package com.javaguy.springrabbitmq.consumer;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
